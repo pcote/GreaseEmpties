@@ -1,6 +1,6 @@
 # grease_empties.py Copyright (C) 2016, cotejrp1
 #
-# Relaxes selected vertices while retaining the shape as much as possible
+# Place empties along the path of grease pencil strokes
 #
 # ***** BEGIN GPL LICENSE BLOCK *****
 #
@@ -27,7 +27,7 @@ bl_info = {
     "version": (1, 0),
     "blender": (2, 75, 0),
     "location": "To be determined",
-    "description": "Generates a set of empty objects that follow a ",
+    "description": "Generates a set of empty objects that follow grease pencil strokes.",
     "warning": "work in progress",
     "wiki_url": "none",
     "category": "Uncategorized",
