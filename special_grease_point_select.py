@@ -1,6 +1,6 @@
-# grease_empties.py Copyright (C) 2016, cotejrp1
+# special_grease_point_select.py Copyright (C) 2016, cotejrp1
 #
-# Place empties along the path of grease pencil strokes
+# Selection of points on a grease pencil stroke.
 #
 # ***** BEGIN GPL LICENSE BLOCK *****
 #
@@ -26,11 +26,11 @@ bl_info = {
     "author": "cotejrp1",
     "version": (1, 0),
     "blender": (2, 75, 0),
-    "location": "To be determined",
+    "location": "Tools > Grease Pencil",
     "description": "Selection of points on a grease pencil stroke.",
     "warning": "work in progress",
     "wiki_url": "none",
-    "category": "Uncategorized",
+    "category": "Other",
 }
 
 import bpy
