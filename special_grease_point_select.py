@@ -80,13 +80,26 @@ class GreaseSpecialSelect(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class GreaseSelectPanel(bpy.types.Panel):
+    bl_label = "Grease Pencil Select"
+    bl_region_type = "TOOLS"
+    bl_category = "Grease Pencil"
+    
+    def draw(self, cxt):
+        layout = self.layout
+        row = layout.row()
+        col = row.column()
+        col.operator(GreaseSpecialSelect.bl_idname)
+
+
 def register():
     bpy.utils.register_class(GreaseSpecialSelect)
+    bpy.utils.register_class(GreaseSelectPanel)    
 
 
 def unregister():
     bpy.utils.unregister_class(GreaseSpecialSelect)
-
+    bpy.utils.register_class(GreaseSelectPanel)
 
 if __name__ == '__main__':
     register()
