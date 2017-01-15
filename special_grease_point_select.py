@@ -52,6 +52,12 @@ class GreaseSpecialSelect(bpy.types.Operator):
     select_methods = [(x,x,x) for x in "random every_nth".split()]
     select_method_choice = EnumProperty(name="Selection Method", items=select_methods)
 
+
+    @classmethod
+    def poll(cls, cxt):
+        pencil = cxt.scene.grease_pencil
+        return pencil and pencil.layers.active.active_frame.strokes
+    
     def execute(self, cxt):
         
         def every_nth_select(idx, pt):
@@ -84,6 +90,7 @@ class GreaseSelectPanel(bpy.types.Panel):
     bl_label = "Grease Pencil Select"
     bl_region_type = "TOOLS"
     bl_category = "Grease Pencil"
+    bl_space_type = "VIEW_3D"
     
     def draw(self, cxt):
         layout = self.layout
@@ -99,7 +106,7 @@ def register():
 
 def unregister():
     bpy.utils.unregister_class(GreaseSpecialSelect)
-    bpy.utils.register_class(GreaseSelectPanel)
+    bpy.utils.unregister_class(GreaseSelectPanel)
 
 if __name__ == '__main__':
     register()
