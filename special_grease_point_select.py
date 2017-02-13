@@ -85,7 +85,31 @@ class GreaseSpecialSelect(bpy.types.Operator):
                 point.select = random_select()
         return {"FINISHED"}
 
-
+class GreaseSelectAllInStroke(bpy.types.Operator):
+    bl_idname = "object.select_all_in_grease_stroke"
+    bl_label  = "Select All In Stroke"
+    
+    @classmethod
+    def poll(cls, cxt):
+        pencil = cxt.scene.grease_pencil
+        return pencil and pencil.layers.active.active_frame.strokes
+    
+    def execute(self, cxt):
+        
+        def has_selected_points(stroke):
+            return True in [point.select for point in stroke.points]
+        
+        def set_stroke_points_selected(stroke):
+            for point in stroke.points:
+                point.select = True
+        
+        strokes = cxt.scene.grease_pencil.layers.active.active_frame.strokes
+        target_strokes = [stroke for stroke in strokes if has_selected_points(stroke)]
+        for stroke in target_strokes:
+            set_stroke_points_selected(stroke)
+        return {"FINISHED"}
+    
+    
 class GreaseSelectPanel(bpy.types.Panel):
     bl_label = "Grease Pencil Select"
     bl_region_type = "TOOLS"
@@ -97,14 +121,20 @@ class GreaseSelectPanel(bpy.types.Panel):
         row = layout.row()
         col = row.column()
         col.operator(GreaseSpecialSelect.bl_idname)
+        
+        row = layout.row()
+        col = row.column()
+        col.operator(GreaseSelectAllInStroke.bl_idname)
 
 
 def register():
+    bpy.utils.register_class(GreaseSelectAllInStroke)
     bpy.utils.register_class(GreaseSpecialSelect)
     bpy.utils.register_class(GreaseSelectPanel)    
 
 
 def unregister():
+    bpy.utils.unregister_class(GreaseSelectAllInStroke)
     bpy.utils.unregister_class(GreaseSpecialSelect)
     bpy.utils.unregister_class(GreaseSelectPanel)
 
